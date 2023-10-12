@@ -23,7 +23,7 @@ class Cloths(models.Model):
         ("satin","satin"),
         ("nylon","nylon"),
         ("polyster","polyster"),
-        ("silik","silk")
+        ("silk","silk")
     )
     material=models.CharField(max_length=200,choices=options,default="cotton")
     image=models.ImageField(upload_to="images")
