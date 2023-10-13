@@ -1,9 +1,12 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from django.views.generic import CreateView
 from yousta.forms import RegistrationForm
 from yousta.models import User
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 class SignUpView(CreateView):
 
@@ -11,6 +14,12 @@ class SignUpView(CreateView):
     form_class=RegistrationForm
     model=User
     success_url=reverse_lazy("signup")
+
+    def form_valid(self,form):
+        messages.success(self.request,"account created")
+        return super().form_valid(form)
+
+
 
 
 
