@@ -2,8 +2,8 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from django.views.generic import CreateView
-from yousta.forms import RegistrationForm
+from django.views.generic import CreateView,FormView
+from yousta.forms import RegistrationForm,LoginForm
 from yousta.models import User
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -23,7 +23,10 @@ class SignUpView(CreateView):
         return super().form_invalid(form)
 
     
-
+class SignInView(FormView):
+    template_name="yousta/login.html"
+    form_class=LoginForm
+    
 
 
 
