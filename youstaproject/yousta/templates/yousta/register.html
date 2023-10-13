@@ -6,6 +6,17 @@
     <title>Document</title>
 </head>
 <body>
+
+{%if messages%}
+    {%for m in messages%}
+
+      <div>
+        {{m}}
+      </div>
+    {%endfor%}
+
+{%endif%}
+
     
 <div class="container">
 <form action="" method="post">
