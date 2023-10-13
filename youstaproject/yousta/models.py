@@ -16,7 +16,7 @@ class Category(models.Model):
         return self.name
     
 class Cloths(models.Model):
-    name=models.CharField(max_length=200)
+    name=models.CharField(max_length=200)#ucb shirt
     options=(
         ("linen","linen"),
         ("cotton","cotton"),
