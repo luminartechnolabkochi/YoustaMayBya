@@ -2,7 +2,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 
-from django.views.generic import CreateView,FormView
+from django.views.generic import CreateView,FormView,ListView
 from yousta.forms import RegistrationForm,LoginForm,CategoryCreateForm
 from yousta.models import User,Category
 from django.urls import reverse_lazy
@@ -45,12 +45,13 @@ class SignInView(FormView):
                 return render(request,self.template_name,{"form":form})
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(CreateView,ListView):
 
     template_name="yousta/category_add.html"
     form_class=CategoryCreateForm
     model=Category
-    success_url=reverse_lazy("category-add")
+    context_object_name="categories"
+    success_url=reverse_lazy("add-category")
     def form_valid(self, form):
         messages.success(self.request,"category added successfully")
         return super().form_valid(form)
