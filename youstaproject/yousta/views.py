@@ -46,11 +46,11 @@ class SignInView(FormView):
 
 
 class CategoryCreateView(CreateView):
+
     template_name="yousta/category_add.html"
     form_class=CategoryCreateForm
     model=Category
     success_url=reverse_lazy("category-add")
-
     def form_valid(self, form):
         messages.success(self.request,"category added successfully")
         return super().form_valid(form)
@@ -60,7 +60,6 @@ class CategoryCreateView(CreateView):
         return super().form_invalid(form)
     
     
-# 10:30 =>    
 
 
 
