@@ -2,7 +2,7 @@ from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from django.views.generic import CreateView,FormView,ListView
+from django.views.generic import CreateView,FormView,ListView,UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
@@ -92,6 +92,26 @@ class ClothListView(ListView):
     template_name="yousta/cloth_list.html"
     model=Cloths
     context_object_name="cloths"
+
+
+class ClothUpdateView(UpdateView):
+    template_name="yousta/cloth_edit.html"
+    model=Cloths
+    form_class=ClothAddForm
+    success_url=reverse_lazy("cloth-list")
+    def form_valid(self, form):
+        messages.success(self.request,"cloth updated successfully")
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request,"cloth updating failed")
+        return super().form_invalid(form)
+
+
+def remove_clothview(request,*args,**kwargs):
+    id=kwargs.get("pk")
+    Cloths.objects.filter(id=id).delete()
+    return redirect("cloth-list")
 
 
 
