@@ -19,7 +19,7 @@
 {%endif%}
 
     
-<div class="container d-flex flex-column align-items-center">
+<div class="container d-flex flex-column align-items-center mt-5">
    <div>
     <form action="" method="post">
 
@@ -37,11 +37,13 @@
             <td>Action</td>
         </tr>
         {%for cat in categories%}
+           <tr>
             <td>{{cat.name}}</td>
             <td>
                 <a href="">delete</a>
             </td>
     
+           </tr>
         {%endfor%}
     
     </table>
