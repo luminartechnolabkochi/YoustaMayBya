@@ -10,24 +10,46 @@
     
 <div class="container">
 
-    <div class="item">
+    <div class="row">
 
-        <div class="card" style="width: 18rem;">
-            <img src="{{cloth.image.url}}" class="card-img-top" alt="..." height="200px">
-            <div class="card-body">
-              <h5 class="card-title">{{cloth.name}}</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{cloth.material}}</li>
-              <li class="list-group-item">{{cloth.brand}}</li>
-              <li class="list-group-item">{{cloth.category}}</li>
-            </ul>
-            <div class="card-body">
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
+        <div class="col-4">
+            <div class="card" style="width:100%">
+                <img src="{{cloth.image.url}}" class="card-img-top" alt="..." height="200px">
+                <div class="card-body">
+                  <h5 class="card-title">{{cloth.name}}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">{{cloth.material}}</li>
+                  <li class="list-group-item">{{cloth.brand}}</li>
+                  <li class="list-group-item">{{cloth.category}}</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+        </div>
+        <div class="col-8 border boredr-dark">
+           <table class="table table-striped">
+            <tr>
+                
+                <td>Price</td>
+                <td>Size</td>
+                <td>color</td>
+            </tr>
+            {%for v in cloth.clothvarients_set.all%}
+
+                <tr>
+                    <td>{{v.price}}</td>
+                    <td>{{v.size}}</td>
+                    <td>{{v.color}}</td>
+                </tr>
+            {%endfor%}
+
+           </table>
+        </div>
+
+     
 
 
 

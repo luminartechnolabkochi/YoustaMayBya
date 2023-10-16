@@ -138,7 +138,12 @@ class ClothDetailView(DetailView):
     context_object_name="cloth"
 
 
+# cloth_object
+# Clothvarients.objects.filter(cloth=cloth_object)
 
+# pm=>cloth
+# cm=>clothvarients
 
+# pmobject.childmodelname_set.all()
 
-
+# cloth.clothvarients_set.all()
