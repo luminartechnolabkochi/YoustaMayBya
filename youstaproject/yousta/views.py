@@ -2,13 +2,13 @@ from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from django.views.generic import CreateView,FormView,ListView,UpdateView
+from django.views.generic import CreateView,FormView,ListView,UpdateView,DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 
-from yousta.forms import RegistrationForm,LoginForm,CategoryCreateForm,ClothAddForm
-from yousta.models import User,Category,Cloths
+from yousta.forms import RegistrationForm,LoginForm,CategoryCreateForm,ClothAddForm,ClothVarientForm
+from yousta.models import User,Category,Cloths,ClothVarients
 
 
 
@@ -113,7 +113,29 @@ def remove_clothview(request,*args,**kwargs):
     Cloths.objects.filter(id=id).delete()
     return redirect("cloth-list")
 
+# localhost:8000/clothvarient/1/add
+# localhost:8000/cloths/1/varients/add
 
+
+class ClothVarientCreateView(CreateView):
+    template_name="yousta/clothvarient_add.html"
+    form_class=ClothVarientForm
+    model=ClothVarients
+    success_url=reverse_lazy("cloth-list")
+
+    def form_valid(self, form):
+        id=self.kwargs.get("pk")
+        obj=Cloths.objects.get(id=id)
+        form.instance.cloth=obj
+        messages.success(self.request,"varient has been added")
+    
+        return super().form_valid(form)
+    
+
+class ClothDetailView(DetailView):
+    template_name="yousta/cloth_detail.html"
+    model=Cloths
+    context_object_name="cloth"
 
 
 
