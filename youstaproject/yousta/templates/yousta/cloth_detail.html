@@ -36,6 +36,7 @@
                 <td>Price</td>
                 <td>Size</td>
                 <td>color</td>
+                <td>Action</td>
             </tr>
             {%for v in cloth.clothvarients_set.all%}
 
@@ -43,6 +44,12 @@
                     <td>{{v.price}}</td>
                     <td>{{v.size}}</td>
                     <td>{{v.color}}</td>
+                    <td>
+                      <a href="{%url 'update-varient' v.id %}" class="btn btn-outline-info">Edit</a>
+                      <a href="{%url 'remove-varient' v.id%}" class="btn btn-outline-danger">remove</a>
+                   
+                      <a href="{%url 'offers-add' v.id%}" class="btn btn-outline-success">add offer</a>
+                    </td>
                 </tr>
             {%endfor%}
 

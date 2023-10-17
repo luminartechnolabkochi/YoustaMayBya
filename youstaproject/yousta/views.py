@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 
-from yousta.forms import RegistrationForm,LoginForm,CategoryCreateForm,ClothAddForm,ClothVarientForm
-from yousta.models import User,Category,Cloths,ClothVarients
+from yousta.forms import RegistrationForm,LoginForm,CategoryCreateForm,ClothAddForm,ClothVarientForm,OfferForm
+from yousta.models import User,Category,Cloths,ClothVarients,Offers
 
 
 
@@ -138,12 +138,48 @@ class ClothDetailView(DetailView):
     context_object_name="cloth"
 
 
-# cloth_object
-# Clothvarients.objects.filter(cloth=cloth_object)
 
-# pm=>cloth
-# cm=>clothvarients
+class ClothVarientUpdateView(UpdateView):
+    template_name="yousta/varient_edit.html"
+    form_class=ClothVarientForm
+    model=ClothVarients
+    success_url=reverse_lazy("cloth-list")
+    def form_valid(self, form):
+        messages.success(self.request,"cloth varient successfully")
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request,"cloth varient updating failed")
+        return super().form_invalid(form)
 
-# pmobject.childmodelname_set.all()
 
-# cloth.clothvarients_set.all()
+def remove_varient(request,*args,**kwargs):
+    id=kwargs.get("pk")
+    ClothVarients.objects.filter(id=id).delete()
+    return redirect("cloth-list")
+
+
+# localhost:8000/varients/<int:pk>/offers/add
+
+class OfferCreateView(CreateView):
+    template_name="yousta/offer_add.html"
+    form_class=OfferForm
+    model=Offers
+    success_url=reverse_lazy("cloth-list")
+    
+    def form_valid(self, form):
+        id=self.kwargs.get("pk")
+        obj=ClothVarients.objects.get(id=id)
+        form.instance.clothvarient=obj
+
+        messages.success(self.request,"offer has been added successfully")
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request,"failed")
+        return super().form_invalid(form)
+    
+    def get_success_url(self) -> str:
+        return super().get_success_url()
+
+
