@@ -2,7 +2,9 @@ from django.urls import path
 
 from yousta.views import SignUpView,SignInView,CategoryCreateView,remove_category\
 ,ClothCreateView,ClothListView,ClothUpdateView,remove_clothview,ClothVarientCreateView,\
-    ClothDetailView,ClothVarientUpdateView,remove_varient,OfferCreateView
+    ClothDetailView,ClothVarientUpdateView,remove_varient,OfferCreateView,offer_delete_view,\
+    sign_out_view
+    
 
 
 
@@ -20,9 +22,9 @@ urlpatterns=[
     path("cloths/<int:pk>/",ClothDetailView.as_view(),name="cloth-detail"),
     path("varients/<int:pk>/change/",ClothVarientUpdateView.as_view(),name="update-varient"),
     path("varients/<int:pk>/remove",remove_varient,name="remove-varient"),
-    path("varients/<int:pk>/offers/add",OfferCreateView.as_view(),name="offers-add")
-
-
+    path("varients/<int:pk>/offers/add",OfferCreateView.as_view(),name="offers-add"),
+    path("offers/<int:pk>/remove",offer_delete_view,name="delete-offer"),
+    path("logout/",sign_out_view,name="signout")
 
 
 

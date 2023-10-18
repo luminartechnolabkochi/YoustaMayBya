@@ -195,6 +195,17 @@ class OfferCreateView(CreateView):
        return reverse("cloth-detail",kwargs={"pk":cloth_id})
 
 
+def offer_delete_view(request,*args,**kwargs):
+    id=kwargs.get("pk")
+    offer_object=Offers.objects.get(id=id)
+    cloth_id=offer_object.clothvarient.cloth.id
+    offer_object.delete()
+    return redirect("cloth-detail",pk=cloth_id)
+
+
+def sign_out_view(request,*args,**kwargs):
+    logout(request)
+    return redirect("signin")
 
 
 
