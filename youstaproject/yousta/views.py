@@ -3,7 +3,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView,FormView,ListView,UpdateView,DetailView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 
@@ -151,6 +151,12 @@ class ClothVarientUpdateView(UpdateView):
     def form_invalid(self, form):
         messages.error(self.request,"cloth varient updating failed")
         return super().form_invalid(form)
+    
+    def get_success_url(self):
+        id=self.kwargs.get("pk")
+        cloth_varient_object=ClothVarients.objects.get(id=id)
+        cloth_id=cloth_varient_object.cloth.id
+        return reverse("cloth-detail",kwargs={"pk":cloth_id})
 
 
 def remove_varient(request,*args,**kwargs):
@@ -179,7 +185,18 @@ class OfferCreateView(CreateView):
         messages.error(self.request,"failed")
         return super().form_invalid(form)
     
-    def get_success_url(self) -> str:
-        return super().get_success_url()
+    def get_success_url(self):
+        # localhost:cloths/<int:pk>/
+       id=self.kwargs.get("pk")
+       cloth_varient_object=ClothVarients.objects.get(id=id)#clothvarientobject
+       cloth_id=cloth_varient_object.cloth.id
 
 
+       return reverse("cloth-detail",kwargs={"pk":cloth_id})
+
+
+
+
+
+   
+   
